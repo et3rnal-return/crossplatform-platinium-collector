@@ -1,27 +1,46 @@
 <template>
-  <nav><router-link to="/">Home</router-link> |</nav>
-  <router-view />
+  <div class="container-center">
+    <router-view />
+    <ThemeToggleButton>Ś</ThemeToggleButton>
+  </div>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+html,
+body {
+  padding: 0;
+  margin: 0;
 }
 
-nav {
-  padding: 30px;
+:root {
+  --background-color-primary: #ebebeb;
+  --background-color-secondary: #fafafa;
+  --accent-color: #cacaca;
+  --text-primary-color: #222;
+  --element-size: 4rem;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+:root.dark-theme {
+  --background-color-primary: #1e1e1e;
+  --background-color-secondary: #2d2d30;
+  --accent-color: #3f3f3f;
+  --text-primary-color: #ddd;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+.container-center {
+  background-color: var(--background-color-primary);
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
+<script lang="ts">
+import { Options, Vue } from "vue-class-component";
+import ThemeToggleButton from "./components/ThemeToggleButton.vue";
+@Options({
+  components: { ThemeToggleButton },
+})
+export default class App extends Vue {}
+</script>
