@@ -18,34 +18,34 @@
 </template>
 
 <script lang="ts">
-const themes = ["dark-theme", "light-theme"];
-type Theme = typeof themes[number];
 import { Options, Vue } from "vue-class-component";
+import {
+  getPreferredTheme,
+  getTheme,
+  setTheme,
+  Theme,
+  themes,
+} from "@/types/themes";
 
 @Options({})
 export default class ThemeToggleButton extends Vue {
   userTheme: Theme = "light-theme";
-  getTheme() {
-    return localStorage.getItem("user-theme");
+
+  created() {
+    let activeTheme = getTheme();
+    activeTheme = activeTheme ?? getPreferredTheme();
+    this.userTheme = activeTheme;
+    setTheme(activeTheme);
   }
+
   toggleTheme() {
-    const activeTheme = this.getTheme();
-    if (activeTheme && themes.includes(activeTheme)) {
-      this.setTheme(activeTheme);
+    const activeTheme = getTheme();
+    if (activeTheme) {
+      const oppositeTheme =
+        activeTheme === "dark-theme" ? "light-theme" : "dark-theme";
+      setTheme(oppositeTheme);
+      this.userTheme = oppositeTheme;
     }
-  }
-  setTheme(theme: Theme) {
-    localStorage.setItem("user-theme", theme);
-    this.userTheme = theme;
-    document.documentElement.className = theme;
-  }
-
-  getMediaPreference(): Theme {
-    const hasDarkPreference = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-
-    return hasDarkPreference ? "dark-theme" : "light-theme";
   }
 }
 </script>
