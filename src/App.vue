@@ -2,6 +2,7 @@
   <div class="container-center">
     <router-view />
     <ThemeToggleButton></ThemeToggleButton>
+    <InputField></InputField>
   </div>
 </template>
 
@@ -39,8 +40,9 @@ body {
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import ThemeToggleButton from "./components/ThemeToggleButton.vue";
+import InputField from "@/components/InputField.vue";
 @Options({
-  components: { ThemeToggleButton },
+  components: { InputField, ThemeToggleButton },
 })
 export default class App extends Vue {}
 </script>
