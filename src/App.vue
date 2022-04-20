@@ -1,7 +1,7 @@
 <template>
   <div class="container-center">
     <router-view />
-    <ThemeToggleButton>Ś</ThemeToggleButton>
+    <ThemeToggleButton></ThemeToggleButton>
   </div>
 </template>
 
