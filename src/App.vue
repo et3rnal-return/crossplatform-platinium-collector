@@ -1,12 +1,12 @@
 <template>
   <div class="container-center">
     <router-view />
-    <ThemeToggleButton></ThemeToggleButton>
-    <InputField></InputField>
   </div>
 </template>
 
-<style>
+<style lang="scss">
+@import "src/breakpoints.scss";
+
 html,
 body {
   padding: 0;
@@ -19,6 +19,11 @@ body {
   --accent-color: #cacaca;
   --text-primary-color: #222;
   --element-size: 4rem;
+  font-size: 8px;
+
+  @include respond-to("large") {
+    font-size: 16px;
+  }
 }
 
 :root.dark-theme {
