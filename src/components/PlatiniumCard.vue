@@ -1,91 +1,144 @@
 <template>
-  <div class="card">
-    <img
-      class="platinium-icon"
-      src="../assets/platinium-trophy.png"
-      alt="none"
-    />
-    <div class="imgBx">
+  <div class="card-wrapper">
+    <div class="card">
       <img
-        src="https://image.api.playstation.com/vulcan/img/rnd/202011/2320/E3hXKQ8iL9BJtAT8gR9nmIMF.png"
+        v-if="game.completionPercentage === 100"
+        class="platinium-icon"
+        src="../assets/platinium-trophy.png"
         alt="none"
       />
-    </div>
-    <div class="contentBx">
-      <h2>Bloodborne</h2>
-      <div class="details">
-        <div>percentage</div>
-        <div>play time</div>
-        <div>date</div>
+      <div class="imgBx">
+        <img :src="game.game.imgSrc" alt="none" />
+      </div>
+      <div class="contentBx">
+        <h2>{{ game.game.name }}</h2>
+        <div class="details">
+          <div>Completion percentage: {{ game.completionPercentage }}%</div>
+          <div v-if="game.timePlayed > 0">
+            Time played: {{ game.timePlayed }}
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+import { defineComponent, PropType } from "vue";
+import { PlatiniumTrophy } from "@/types/types";
 
-@Options({})
-export default class PlatiniumCard extends Vue {}
+export default defineComponent({
+  props: {
+    game: {
+      type: Object as PropType<PlatiniumTrophy>,
+      required: true,
+    },
+  },
+});
 </script>
 
 <style lang="scss" scoped>
-.card {
+.card-wrapper {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 20rem;
-  height: 28rem;
-  background: #232323;
+  width: 28rem;
+  height: 20rem;
   border-radius: 20px;
-  overflow: hidden;
+  //overflow: hidden;
+  z-index: 1;
+  margin: 150px;
 }
 
-.card .platinium-icon {
+.card {
+  position: relative;
+  overflow: hidden;
+  background: #232323;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+}
+
+.card-wrapper .platinium-icon {
   position: absolute;
   top: 0;
   right: 0;
   width: 3rem;
   height: 3rem;
+  z-index: 2;
 }
 
-.card .imgBx {
+.card-wrapper .imgBx {
   display: flex;
   justify-content: center;
-  clip-path: inset(15% 15% 15% 15%);
+  //clip-path: inset(15% 15% 15% 15%);
   position: relative;
-  height: 100%;
+  height: 75%;
+  z-index: 5;
 }
 
-.card .imgBx img {
+.card-wrapper .imgBx img {
   height: 100%;
+  user-drag: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
-.card .contentBx {
+.card-wrapper .contentBx {
   padding-top: 10px;
-  position: absolute;
   bottom: 0;
-  width: 100%;
-  height: 100%;
-  transform: translate(0, 90%);
+  width: auto;
+  height: auto;
   text-align: center;
   z-index: 10;
   transition: all;
-  transition-duration: 1s;
+  transition-duration: 0.25s;
   background: #232323;
   color: #fff;
 }
 
-.card .contentBx .details {
+.card-wrapper .contentBx .details {
   display: grid;
   grid-template-columns: 1fr;
 }
 
-.card:hover .contentBx {
+.card-wrapper:hover::before,
+.card-wrapper:hover::after {
+  opacity: 1;
+}
+
+.card-wrapper:hover .contentBx {
   bottom: 35%;
 }
 
-.card .contentBx h2 {
+.card-wrapper .contentBx h2 {
   margin: 0;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-wrapper::before,
+.card-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #4aa5f8, #effffe);
+  filter: blur(30px);
+  opacity: 0;
+  z-index: 0;
+
+  transition: 1s;
+}
+
+.card-wrapper::after {
+  filter: blur(50px);
 }
 </style>

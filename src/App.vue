@@ -1,6 +1,7 @@
 <template>
   <div class="container-center">
     <router-view />
+    <theme-toggle-button class="theme-button" />
   </div>
 </template>
 
@@ -40,14 +41,22 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+}
+
+.theme-button {
+  top: 5px;
+  right: 5px;
+  position: fixed;
 }
 </style>
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import ThemeToggleButton from "./components/ThemeToggleButton.vue";
 import InputField from "@/components/InputField.vue";
+import PlatiniumCard from "@/components/PlatiniumCard.vue";
 @Options({
-  components: { InputField, ThemeToggleButton },
+  components: { PlatiniumCard, InputField, ThemeToggleButton },
 })
 export default class App extends Vue {}
 </script>
