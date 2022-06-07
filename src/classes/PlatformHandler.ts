@@ -1,5 +1,5 @@
-import { PlatiniumTrophy } from "@/types/types";
+import { Platform, PlatiniumTrophy } from "@/types/types";
 
 export abstract class PlatformHandler {
-  abstract getTrophies(id: string): Promise<PlatiniumTrophy[]>;
+  abstract getTrophies(id: string): Promise<Platform>;
 }

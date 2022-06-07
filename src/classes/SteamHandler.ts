@@ -1,9 +1,8 @@
 import { PlatformHandler } from "@/classes/PlatformHandler";
-import { PlatiniumTrophy } from "@/types/types";
-import { exchangeNpssoForCode } from "@/utils/access";
+import { Platform, PlatiniumTrophy } from "@/types/types";
 
 export class SteamHandler extends PlatformHandler {
-  async getTrophies(id: string): Promise<PlatiniumTrophy[]> {
+  async getTrophies(id: string): Promise<Platform> {
     const url = `http://localhost:8081/trophies?platform=Steam&id=${id}`;
     const response = await fetch(url, {
       method: "GET",
@@ -11,7 +10,8 @@ export class SteamHandler extends PlatformHandler {
         "Content-Type": "application/json",
       },
     }).then((i) => i.json());
-    console.log(response);
-    return Promise.resolve(response);
+    const platform: Platform = { name: "Steam", trophies: response };
+    console.log(response, platform, "steam");
+    return Promise.resolve(platform);
   }
 }

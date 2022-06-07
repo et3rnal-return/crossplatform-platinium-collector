@@ -1,7 +1,10 @@
 <template>
-  <div>Games: {{ games.length }}</div>
-  <div>Completed: {{ fullCompleted }}</div>
-  <div>Time spent: {{ timeSpent }}</div>
+  <div class="platform-info" ref="platform">
+    <div style="text-decoration: underline">{{ platform }}</div>
+    <div>Games: {{ games.length }}</div>
+    <div>Completed: {{ fullCompleted }}</div>
+    <div>Time spent: {{ timeSpent }}</div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -10,16 +13,15 @@ import PlatiniumCard from "@/components/PlatiniumCard.vue";
 import { defineComponent, PropType } from "vue";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide } from "vue3-carousel";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   props: {
+    platform: String,
     games: {
       type: Object as PropType<PlatiniumTrophy[]>,
       required: true,
     },
-  },
-  mounted() {
-    console.log(this.games);
   },
   computed: {
     fullCompleted() {
@@ -36,8 +38,11 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-div {
+.platform-info div {
+  z-index: 20;
   color: white;
-  font-size: 30px;
+  font-size: 2.5em;
+  font-family: "Lato", sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 </style>

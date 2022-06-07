@@ -8,3 +8,8 @@ export type PlatiniumTrophy = {
   timePlayed: string;
   completionPercentage: number;
 };
+
+export type Platform = {
+  name: string;
+  trophies: PlatiniumTrophy[];
+};

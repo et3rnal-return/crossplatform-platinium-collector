@@ -5,7 +5,7 @@
   ></InputField>
   <LoadingIndicator
     v-if="trophies !== undefined"
-    :loaded="trophies?.length >= 0"
+    :loaded="trophies?.trophies.length >= 0"
   />
 </template>
 
@@ -14,11 +14,11 @@ import LoadingIndicator from "@/components/LoadingIndicator.vue";
 import InputField from "@/components/InputField.vue";
 import { PlatformHandler } from "@/classes/PlatformHandler";
 import { defineComponent, PropType } from "vue";
-import { PlatiniumTrophy } from "@/types/types";
+import { Platform, PlatiniumTrophy } from "@/types/types";
 
 export interface PlatformFetchData {
   platform: string;
-  trophies: PlatiniumTrophy[] | undefined | null;
+  trophies: Platform | undefined | null;
 }
 
 export default defineComponent({
@@ -43,8 +43,9 @@ export default defineComponent({
   methods: {
     async fetch() {
       this.trophies = null;
-      this.trophies = await this.platformHandler.getTrophies(this.platform);
+      console.log(this.trophies, "platform fetch");
       this.$emit("trophies", this.trophies);
+      return this.trophies;
     },
   },
 });

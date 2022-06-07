@@ -1,5 +1,8 @@
 <template>
-  <div class="card-wrapper">
+  <div
+    :class="{ completed: game.completionPercentage === 100 }"
+    class="card-wrapper"
+  >
     <div class="card">
       <img
         v-if="game.completionPercentage === 100"
@@ -47,7 +50,7 @@ export default defineComponent({
   border-radius: 20px;
   //overflow: hidden;
   z-index: 1;
-  margin: 150px;
+  margin: 50px;
 }
 
 .card {
@@ -105,8 +108,8 @@ export default defineComponent({
   grid-template-columns: 1fr;
 }
 
-.card-wrapper:hover::before,
-.card-wrapper:hover::after {
+.completed::before,
+.completed::after {
   opacity: 1;
 }
 
@@ -122,8 +125,8 @@ export default defineComponent({
   text-overflow: ellipsis;
 }
 
-.card-wrapper::before,
-.card-wrapper::after {
+.completed::before,
+.completed::after {
   content: "";
   position: absolute;
   top: 0;
@@ -131,14 +134,14 @@ export default defineComponent({
   width: 100%;
   height: 100%;
   background: linear-gradient(135deg, #4aa5f8, #effffe);
-  filter: blur(30px);
-  opacity: 0;
+  filter: blur(20px);
+  opacity: 1;
   z-index: 0;
 
   transition: 1s;
 }
 
-.card-wrapper::after {
-  filter: blur(50px);
+.completed::after {
+  filter: blur(10px);
 }
 </style>

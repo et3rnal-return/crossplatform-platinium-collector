@@ -1,54 +1,55 @@
 <template>
-  <div class="home">
-    <InputView
-      v-if="platforms.length < 1"
-      @platforms="
-        (v) => {
-          this.platforms = v;
-        }
-      "
+  <div class="platform-info-wrapper">
+    <PlatformInfo
+      v-for="platform in platforms"
+      :key="platform.name"
+      :platform="platform.name"
+      :games="platform.trophies"
     />
-    <AlbumView v-if="platforms.length > 0" :platforms="platforms" />
+  </div>
+  <div class="album-wrapper">
+    <TrophiesAlbum class="trophies-album" :games="trophies" />
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import InputField from "@/components/InputField.vue";
 import LoadingIndicator from "@/components/LoadingIndicator.vue";
 import PlatformFetch from "@/components/PlatformFetch.vue";
 import { Platform, PlatiniumTrophy } from "@/types/types";
 import TrophiesAlbum from "@/components/TrophiesAlbum.vue";
+import { trophies } from "@/utils/mocks";
 import PlatformInfo from "@/components/PlatformInfo.vue";
-import InputView from "@/views/InputView.vue";
-import AlbumView from "@/views/AlbumView.vue";
+import { PropType } from "vue";
 
 @Options({
   components: {
-    AlbumView,
-    InputView,
     PlatformInfo,
     TrophiesAlbum,
     PlatformFetch,
     LoadingIndicator,
-    InputField,
+  },
+  props: {
+    platforms: {
+      type: Object as PropType<Platform[]>,
+      required: true,
+    },
+  },
+  computed: {
+    trophies() {
+      let arr: PlatiniumTrophy[] = [];
+      this.platforms.forEach((p: Platform) => {
+        arr.push(...p.trophies);
+      });
+      return arr;
+    },
   },
 })
-export default class HomeView extends Vue {
-  platforms: Platform[] = [];
-}
+export default class AlbumView extends Vue {}
 </script>
 
 <style lang="scss" scoped>
 @import "src/breakpoints.scss";
-
-.home {
-  width: 100%;
-  height: calc(100% - 100px);
-  display: flex;
-  flex-direction: column;
-  padding: 50px;
-}
 
 .album-wrapper {
   position: absolute;
