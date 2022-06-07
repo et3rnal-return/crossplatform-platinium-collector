@@ -1,13 +1,14 @@
 <template>
-  <div class="input-container">
-    <input class="" placeholder="your psn" />
-    <button type="submit">-></button>
-  </div>
+  <input
+    :value="modelValue"
+    @input="$emit('update:modelValue', $event.target.value)"
+  />
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-@Options({})
+
+@Options({ props: { modelValue: String }, emits: ["update:modelValue"] })
 export default class InputField extends Vue {}
 </script>
 
@@ -26,9 +27,6 @@ input {
   border-style: none;
   background: transparent;
   outline: none;
-}
-
-.input-container {
   position: relative;
   display: flex;
   flex-direction: row;
@@ -38,9 +36,6 @@ input {
   border-radius: 2px;
   padding: 1.4rem 2rem 1.6rem;
   background: $input-background;
-}
-
-.input-container input {
   flex-grow: 1;
   color: $input-text-active;
   font-size: 1.8rem;
@@ -52,7 +47,7 @@ input {
   }
 }
 
-.input-container button {
+button {
   color: $input-text-inactive;
   font-size: 2.4rem;
   line-height: 2.4rem;

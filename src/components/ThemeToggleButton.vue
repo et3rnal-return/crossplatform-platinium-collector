@@ -20,6 +20,7 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { getPreferredTheme, getTheme, setTheme, Theme } from "@/types/themes";
+import { PlatiniumTrophy } from "@/types/types";
 
 @Options({})
 export default class ThemeToggleButton extends Vue {
